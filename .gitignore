@@ -1,0 +1,53 @@
+# --- Meteor Core ---
+# Contains local MongoDB data and temporary build state. 
+# NEVER commit this or your repo size will explode.
+.meteor/local
+
+# Platform-specific link to the Node/NPM versions used by Meteor.
+# Must be ignored to prevent cross-OS build failures.
+.meteor/dev_bundle
+
+
+# --- Dependencies ---
+# Standard Node.js dependencies. Always ignore; they are 
+# re-installed via 'meteor npm install'.
+node_modules/
+
+# Log files from package managers.
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+
+# --- Security & Configuration ---
+# Files containing sensitive API keys, secrets, or environment-specific 
+# database URLs. NEVER commit these.
+settings.json
+settings-*.json
+.env
+.env.local
+
+
+# --- Build Artifacts ---
+# Created when running 'meteor build'. These are minified production 
+# bundles that should not be tracked.
+build/
+dist/
+
+
+# --- Mobile Development (Cordova) ---
+# If you develop for iOS/Android, ignore the generated project files.
+.meteor/local/cordova-build/
+platforms/
+
+
+# --- Editor & OS Specific ---
+# User-specific settings from IDEs like VS Code or IntelliJ.
+.vscode/
+.idea/
+*.swp
+*.log
+
+# System junk files
+.DS_Store
+Thumbs.db

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { useTracker, useSubscribe } from "meteor/react-meteor-data";
 import { Task } from "./Task.jsx";
 import { TasksCollection } from "../api/TasksCollection.js";
 import { TaskForm } from "./TaskForm.jsx";
+import { LoginForm } from "./LoginForm.jsx";
 
 export const App = () => {
   const [hideCompleted, setHideCompleted] = useState(false);
@@ -14,6 +15,8 @@ export const App = () => {
       sort: { createdAt: -1 },
     }).fetch(),
   );
+
+  const user = useTracker(() => Meteor.user());
 
   const pendingTasksCount = useTracker(() =>
     TasksCollection.find({ isChecked: { $ne: true } }).count(),
@@ -43,22 +46,28 @@ export const App = () => {
         </div>
       </header>
       <div className="main">
-        <TaskForm />
-        <div className="filter">
-          <button onClick={() => setHideCompleted(!hideCompleted)}>
-            {hideCompleted ? "Show All" : "Hide Completed"}
-          </button>
-        </div>
-        <ul className="tasks">
-          {tasks.map((task) => (
-            <Task
-              key={task._id}
-              task={task}
-              onCheckboxClick={handleToggleChecked}
-              onDeleteClick={handleDelete}
-            />
-          ))}
-        </ul>
+        {user ? (
+          <Fragment>
+            <TaskForm />
+            <div className="filter">
+              <button onClick={() => setHideCompleted(!hideCompleted)}>
+                {hideCompleted ? "Show All" : "Hide Completed"}
+              </button>
+            </div>
+            <ul className="tasks">
+              {tasks.map((task) => (
+                <Task
+                  key={task._id}
+                  task={task}
+                  onCheckboxClick={handleToggleChecked}
+                  onDeleteClick={handleDelete}
+                />
+              ))}
+            </ul>
+          </Fragment>
+        ) : (
+          <LoginForm />
+        )}
       </div>
     </div>
   );
